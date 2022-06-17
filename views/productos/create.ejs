@@ -1,24 +1,31 @@
-<form action="/productos/store" method="post">
-    <div>
-        <label for="codigo">Codigo: </label>
-        <input type="text" id="codigo" name="codigo">
+<h1>Crear producto</h1>
+
+<div class="row justify-content-center">
+    <div class="col-6">
+        <form action="/productos/store" method="post">
+            <div>
+                <label for="codigo" class="form-label">Codigo: </label>
+                <input type="text" class="form-control" id="codigo" name="codigo">
+            </div>
+            <div>
+                <label for="nombre" class="form-label">Nombre: </label>
+                <input type="text" class="form-control" id="nombre" name="nombre">
+            </div>
+            <div>
+                <label for="descripcion" class="form-label">Descripcion: </label>
+                <textarea class="form-control" name="descripcion" id="descripcion" cols="30" rows="10"></textarea>
+            </div>
+            <div>
+                <label for="categoria" class="form-label">Categoria: </label>
+                <select class="form-control" name="categoria" id="categoria">
+                    <option value=""></option>
+                    <option value="1">Categoria 1</option>
+                    <option value="2">Categoria 2</option>
+                    <option value="3">Categoria 3</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+        </form>
     </div>
-    <div>
-        <label for="nombre">Nombre: </label>
-        <input type="text" id="nombre" name="nombre">
-    </div>
-    <div>
-        <label for="descripcion">Descripcion: </label>
-        <textarea name="descripcion" id="descripcion" cols="30" rows="10"></textarea>
-    </div>
-    <div>
-        <label for="categoria">Categoria: </label>
-        <select name="categoria" id="categoria">
-            <option value=""></option>
-            <option value="1">Categoria 1</option>
-            <option value="2">Categoria 2</option>
-            <option value="3">Categoria 3</option>
-        </select>
-    </div>
-    <button type="submit">Guardar</button>
-</form>
+</div>
+
