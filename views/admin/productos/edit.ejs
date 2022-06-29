@@ -3,7 +3,7 @@
 
 <div class="row justify-content-center">
     <div class="col-6">
-        <form action="/admin/productos/update?_method=PUT" method="post">
+        <form action="/admin/productos/update?_method=PUT" method="post" enctype="multipart/form-data">
             <div>
                 <label for="codigo" class="form-label">Codigo: </label>
                 <input type="text" class="form-control" id="codigo" name="codigo" value="<%= producto.codigo %>" readonly>
@@ -11,6 +11,11 @@
             <div>
                 <label for="nombre" class="form-label">Nombre: </label>
                 <input type="text" class="form-control" id="nombre" name="nombre" value="<%= producto.nombre %>">
+            </div>
+            <div>
+                <label for="imagen" class="form-label">Imagen: </label>
+                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/jpg">
+                <img width="100" src="/uploads/producto_<%= producto.codigo %>.jpg" alt="<%= producto.nombre %>">
             </div>
             <div>
                 <label for="descripcion" class="form-label">Descripcion: </label>

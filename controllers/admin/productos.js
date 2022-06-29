@@ -1,4 +1,5 @@
 const connection = require('../../db');
+const sharp = require('sharp');
 
 module.exports.index = (req, res) => {
     connection.query('SELECT * FROM productos', (error, results) => {
@@ -13,6 +14,8 @@ module.exports.create = (req, res) => {
 }
 
 module.exports.store = (req, res) => {
+    // console.log(req.body, req.file);
+    // sharp(req.file.buffer).resize(300).toFile('uploads/imagen.jpg');
     connection.query('INSERT INTO productos SET ?', {
         codigo: req.body.codigo, 
         nombre: req.body.nombre,
@@ -20,6 +23,8 @@ module.exports.store = (req, res) => {
         categoria_id: req.body.categoria
     }, (error) => {
         if (error) { throw error }
+
+        sharp(req.file.buffer).resize(300).toFile(`./public/uploads/producto_${req.body.codigo}.jpg`);
 
         res.redirect('/admin/productos');
     });
@@ -42,10 +47,15 @@ module.exports.edit = (req, res) => {
 }
 
 module.exports.update = (req, res) => {
-    connection.query('UPDATE productos SET ? WHERE codigo = ?', [ { nombre: req.body.nombre, descripcion: req.body.descripcion, categoria_id: req.body.categoria }, req.body.codigo ], error => {
+    connection.query('UPDATE productos SET ? WHERE codigo = ?', [ { nombre: req.body.nombre, descripcion: req.body.descripcion, categoria_id: req.body.categoria }, req.body.codigo ], async error => {
         if (error) { throw error }
 
-        res.redirect('/admin/productos');
+        if (req.file) {
+            await sharp(req.file.buffer).resize(300).toFile(`./public/uploads/producto_${req.body.codigo}.jpg`);
+            res.redirect('/admin/productos');
+        } else {
+            res.redirect('/admin/productos');
+        }
     });
 }
 
