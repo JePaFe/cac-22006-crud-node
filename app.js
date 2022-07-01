@@ -4,12 +4,19 @@ const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
 const methodOverride = require('method-override');
-const session = require('express-session');
+// const session = require('express-session');
+const session = require('cookie-session');
+
+const sequelize = require('./db2');
+
+// app.use(session({
+//     secret: 'k(x=zN;86;K(Ea>4',
+//     resave: false,
+//     saveUninitialized: false
+// }));
 
 app.use(session({
-    secret: 'k(x=zN;86;K(Ea>4',
-    resave: false,
-    saveUninitialized: false
+    keys: ['k(x=zN;86;K(Ea>4', 'cFE7Q:B>zF#>vcmJ']
 }));
 
 app.set('view engine', 'ejs');
@@ -33,6 +40,7 @@ app.use(require('./routes/productos'));
 app.use(require('./routes/contacto'));
 
 app.use('/admin', isLogin, require('./routes/admin/productos'));
+app.use('/admin', isLogin, require('./routes/admin/categorias'));
 
 app.use(require('./routes/auth'));
 
@@ -42,4 +50,13 @@ app.use((req, res, next) => {
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => console.log(`http://localhost:${port}`));
+app.listen(port, async () => {
+    console.log(`http://localhost:${port}`);
+
+    try {
+        await sequelize.sync();
+        console.log('Sequelize OK');
+    } catch(error) {
+        console.log('Error de sequelize' + error);
+    } 
+});
