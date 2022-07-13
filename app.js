@@ -47,6 +47,7 @@ app.use('/admin', isLogin, require('./routes/admin/productos'));
 app.use('/admin', isLogin, require('./routes/admin/categorias'));
 
 app.use('/api', require('./routes/api/categorias'));
+app.use('/api', require('./routes/api/jwt'));
 
 app.use(require('./routes/auth'));
 
